@@ -50,7 +50,7 @@ function play() {
   let guessesN = 0;
   while(input = prompt("Halló, endilega giskaðu á tölu á bilinu 1-100", '')){
     let guess = parseGuess(input);
-    alert(getResponse(guess, randNum));
+    alert(getResponse(guess, rndNum));
     guessesN++;
     if(getResponse(guess, rndNum) === "Rétt"){
       games.push(guessesN);
@@ -78,11 +78,11 @@ function getResults(){
   if(games.length > 0){
     if(games.length == 1){
       result = alert('þú spilaðir ' + games.length + ' leik' +
-      '/n Meðalfjöldi ágiskana var' + calculateAverage());
+      '\n Meðalfjöldi ágiskana var' + calculateAverage());
     }
     else{
       result = alert('þú spilaðir ' + games.length + ' leiki' +
-      '/n Meðalfjöldi ágiskana var' + calculateAverage());
+      '\n Meðalfjöldi ágiskana var' + calculateAverage());
     }
   }
   else{
@@ -112,7 +112,12 @@ function calculateAverage(){
  * Ef ekki er hægt að ná tölu úr input er skilað null
  */
 function parseGuess(input){
-  parsedInput = parsedInt(input);
+  if(typeof parseInt(input, 10) === 'number'){
+    return parseInt(input);
+  }
+  else{
+    return null;
+  }
 }
 
 /**
