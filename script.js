@@ -13,7 +13,7 @@
  *  - Seinni leikur kláraðist í þrem ágiskunum.
  */
 
- const games = [];
+const games = [];
 
 
  /**
@@ -24,6 +24,10 @@
   */
 function start() {
   play();
+  while(confirm("Viltu spila nýjan leik?")){
+    play();
+  }
+  getResults();
 }
 
 /**
@@ -41,8 +45,24 @@ function start() {
  * Þarf aðútfæra með lykkju og flæðisstýringum
  */
 function play() {
-  const random = randomNumber(1,100;
+  const rndNum = randomNumber(1,100);
+  console.log(rndNum);
+  let guessesN = 0;
+  while(input = prompt("Halló, endilega giskaðu á tölu á bilinu 1-100", '')){
+    let guess = parseGuess(input);
+    alert(getResponse(guess, randNum));
+    guessesN++;
+    if(getResponse(guess, rndNum) === "Rétt"){
+      games.push(guessesN);
+      break;
+    }
+  }
+  if(input === null){
+    alert('Hætta í leik');
+  }
 }
+
+
 
 /**
  * Skilar niðurstöðum um spilaða leiki sem streng.
@@ -54,7 +74,21 @@ function play() {
  *    "Þú spilaðir engann leik >_<"
  */
 function getResults(){
-
+  var result;
+  if(games.length > 0){
+    if(games.length == 1){
+      result = alert('þú spilaðir ' + games.length + ' leik' +
+      '/n Meðalfjöldi ágiskana var' + calculateAverage());
+    }
+    else{
+      result = alert('þú spilaðir ' + games.length + ' leiki' +
+      '/n Meðalfjöldi ágiskana var' + calculateAverage());
+    }
+  }
+  else{
+    result = alert('Þú spilaðir engann leik >_<')
+  }
+  return result;
 }
 
 /**
@@ -66,7 +100,11 @@ function getResults(){
  * þarf að útfæra með lykkju.
  */
 function calculateAverage(){
-
+  let guesses = 0;
+  for(let i = 0; i < games.length; i++){
+    guesses += games[i];
+  }
+  return guesses / games.length;
 }
 
 /**
@@ -74,7 +112,7 @@ function calculateAverage(){
  * Ef ekki er hægt að ná tölu úr input er skilað null
  */
 function parseGuess(input){
-
+  parsedInput = parsedInt(input);
 }
 
 /**
@@ -93,7 +131,26 @@ function parseGuess(input){
  * Math.abs skilar algildi tölu: |a| = Math.abs(a)
  */
 function getResponse(guess, correct){
-  return 'Ekki rétt';
+  gap = Math.abs(correct - guess);
+  if(gap<0 || isNaN(gap)){
+    return 'Ekki rétt';
+  }
+  if(gap === 0){
+    return 'Rétt';
+  }
+  if(gap < 5){
+    return 'Mjög nálægt';
+  }
+  else if(gap < 10){
+    return 'Nálægt';
+  }
+  else if(gap < 20){
+    return 'Frekar langt frá';
+  }
+  else if(gap < 50){
+    return 'Langt frá';
+  }
+  return 'Mjög Langt frá';
 }
 
 /**
